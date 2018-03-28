@@ -4,15 +4,19 @@
 #include "registers.h"
 #include <stdbool.h>
 
+/*
+Port Inilsization Function
+*/
+
 void Init (uint32_t Port){
 	switch (Port)
 	{
-		case PortA : RCGCGPIO =0x01;
-		case PortB : RCGCGPIO =0x02;
-		case PortC : RCGCGPIO =0x04;
-		case PortD : RCGCGPIO =0x08;
-		case PortE : RCGCGPIO =0x10;
-		case PortF : RCGCGPIO =0x20;
+		case PortA : SetBit(RCGCGPIO,1);
+		case PortB : SetBit(RCGCGPIO,2);
+		case PortC : SetBit(RCGCGPIO,3);
+		case PortD : SetBit(RCGCGPIO,4);
+		case PortE : SetBit(RCGCGPIO,5);
+		case PortF : SetBit(RCGCGPIO,6);
 	}
 
 	Unlock(Port);
@@ -24,22 +28,36 @@ void Init (uint32_t Port){
 
 }
 
-void Port_Dir(uint32_t Port, uint8_t Dir ){
+/*
+Port Direction With Port argument and 8 bit fo the direction of all pins
+*/
 
+void Port_Dir(uint32_t Port, uint8_t Dir ){
+	Init(Port);
 	Func(Port,DIR)=Dir;
 }
+/*
+Pin Direction 
+*/
 
 void Pin_Dir (uint32_t Port, uint8_t Pin,bool Dir ){
+
+	Init(Port);
+
 	if(Dir)
 		Output (Port,Pin);
 	else
 		Input (Port,Pin);
 }
-
+/*
+Write in the Whole port with 8 bits
+*/
 void PortWrite (uint32_t Port, uint8_t Write ){
 	Func(Port,DATA)=Write;
 }
-
+/*
+Pin Write
+*/
 void PinWrite (uint32_t Port, uint8_t Pin, bool Write){
 	if(Write)
 		Set(Port,Pin);
@@ -47,9 +65,61 @@ void PinWrite (uint32_t Port, uint8_t Pin, bool Write){
 		Clear(Port,Pin);
 }
 
+/*
+Reads From Specifict pin
+*/
 bool PinRead (uint32_t Port, uint8_t Pin ){
 	return Get(Port,Pin);
 }
+/*
+Reads The Port 8 Bits
+*/
 uint8_t PortRead (uint32_t Port){
 	return Func(Port,DATA);
+}
+
+/*
+Like Ardiuno
+*/
+
+void DigitalWrite(uint8_t Pin,bool Write){
+
+	switch(Pin/10)
+	{
+	case 0: if(Write) Set(PortA,Pin%10); else Clear(PortA,Pin%10);
+	case 1: if(Write) Set(PortB,Pin%10); else Clear(PortB,Pin%10);
+	case 2: if(Write) Set(PortC,Pin%10); else Clear(PortC,Pin%10);
+	case 3: if(Write) Set(PortD,Pin%10); else Clear(PortD,Pin%10);
+	case 4: if(Write) Set(PortE,Pin%10); else Clear (PortE,Pin%10);
+	case 5: if(Write) Set(PortF,Pin%10); else Clear(PortF,Pin%10);
+	}
+}
+/*
+Like Ardiuno
+*/
+void PinMode(uint8_t Pin,bool Dir)
+{
+	switch(Pin/10)
+	{
+    case 0: Init(PortA); if(!Dir) Input(PortA,Pin%10); else Output(PortA,Pin%10);
+    case 1: Init(PortB); if(!Dir) Input(PortB,Pin%10); else Output(PortB,Pin%10);
+    case 2: Init(PortC); if(!Dir) Input(PortC,Pin%10); else Output(PortC,Pin%10);
+	case 3: Init(PortD); if(!Dir) Input(PortD,Pin%10); else Output(PortD,Pin%10);
+	case 4: Init(PortE); if(!Dir) Input(PortE,Pin%10); else  Output(PortE,Pin%10);
+	case 5: Init(PortF); if(!Dir) Input(PortF,Pin%10); else Output(PortF,Pin%10);
+	}
+}
+/*
+Like Ardiuno
+*/
+bool DigitalRead(uint8_t Pin){
+	switch(Pin/10)
+	{
+	case 0: return Get(PortA, Pin%10);
+	case 1: return Get(PortB, Pin%10);
+	case 2: return Get(PortC, Pin%10);
+	case 3: return Get(PortD, Pin%10);
+	case 4: return Get(PortE, Pin%10);
+	case 5: return Get(PortF, Pin%10);
+	}
 }

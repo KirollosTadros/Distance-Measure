@@ -57,3 +57,10 @@
 #define Clear(P,Bit) ClearBit(Func(P,DATA),Bit)
 #define Get(P,Bit) GetBit(Func(P,DATA),Bit)
 #define RCGCGPIO (*((uint32_t*) 0x400FE608))
+	
+#define PA 0+
+#define PB 10+
+#define PC 20+
+#define PD 30+
+#define PE 40+
+#define PF 50+
