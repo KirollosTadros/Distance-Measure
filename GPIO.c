@@ -18,12 +18,12 @@ void Init (uint32_t Port){
 		case PortE : SetBit(RCGCGPIO,4);
 		case PortF : SetBit(RCGCGPIO,5);
 	}
-
+	uint32_t delay=RCGCGPIO;
 	Unlock(Port);
-    GPIOCR(Port);
-    AMSEL(Port);
-    FCTL(Port);
-    AFSEL(Port);
+    	GPIOCR(Port);
+    	AMSEL(Port);
+    	FCTL(Port);
+    	AFSEL(Port);
 	DIGITAL(Port);
 
 }
