@@ -11,7 +11,7 @@
 
 //Base Address of AHB
 
-#define PortA_h		 0x40058000
+#define PortA_H		 0x40058000
 #define PortB_H		 0x40059000
 #define PortC_H		 0x4005A000
 #define PortD_H		 0x4005B000
