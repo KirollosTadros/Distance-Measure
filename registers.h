@@ -32,38 +32,38 @@
 //Registers Offset
 
 #define DATA		 0x3FC
-#define DIR			 0x400
-#define DEN			 0x51C
+#define DIR	  	 0x400
+#define DEN		 0x51C
 #define LOCK		 0x520
 #define RCGC		 0x400FE608
-#define CR			 0x524
-#define SEL			 0x420
-#define CTL			 0x52C
+#define CR		 0x524
+#define SEL		 0x420
+#define CTL		 0x52C
 #define MSEL		 0x528
-#define PUR			 0x510
+#define PUR		 0x510
 
 
 
-#define Func(P,F) (*((uint32_t*) (P|F)))
-#define Unlock(P) Func(P,LOCK)=0x4C4F434B
-#define AFSEL(P) Func(P,SEL)=0x00000000
-#define FCTL(P) Func(P,CTL)=0x00000000
-#define AMSEL(P) Func(P,MSEL)=0x00000000
-#define GPIOCR(P) Func(P,CR)=0xFF
-#define DIGITAL(P) Func(P,DEN)=0xFF
-#define Output(P,Bit) SetBit(Func(P,DIR),Bit)
-#define Input(P,Bit) ClearBit(Func(P,DIR),Bit)
-#define Set(P,Bit) SetBit(Func(P,DATA),Bit)
-#define Clear(P,Bit) ClearBit(Func(P,DATA),Bit)
-#define Get(P,Bit) GetBit(Func(P,DATA),Bit)
-#define RCGCGPIO (*((uint32_t*) 0x400FE608))
+#define Func(P,F) 	(*((uint32_t*) (P|F)))
+#define Unlock(P) 	Func(P,LOCK)=0x4C4F434B
+#define AFSEL(P) 	Func(P,SEL)=0x00000000
+#define FCTL(P) 	Func(P,CTL)=0x00000000
+#define AMSEL(P) 	Func(P,MSEL)=0x00000000
+#define GPIOCR(P) 	Func(P,CR)=0xFF
+#define DIGITAL(P) 	Func(P,DEN)=0xFF
+#define Output(P,Bit) 	SetBit(Func(P,DIR),Bit)
+#define Input(P,Bit) 	ClearBit(Func(P,DIR),Bit)
+#define Set(P,Bit) 	SetBit(Func(P,DATA),Bit)
+#define Clear(P,Bit) 	ClearBit(Func(P,DATA),Bit)
+#define Get(P,Bit) 	GetBit(Func(P,DATA),Bit)
+#define RCGCGPIO 	(*((uint32_t*) 0x400FE608))
 	
-#define PA 0+
-#define PB 10+
-#define PC 20+
-#define PD 30+
-#define PE 40+
-#define PF 50+
+#define PA 		0+
+#define PB 		10+
+#define PC 		20+
+#define PD 		30+
+#define PE 		40+
+#define PF 		50+
 
 #define PA0		 0
 #define PA1		 1
@@ -114,7 +114,7 @@
 #define PF6		 56
 #define PF7		 67
 
-#define OUTPUT	 1
-#define INPUT	 0
-#define HIGH	 1
+#define OUTPUT	 	 1
+#define INPUT	   	 0
+#define HIGH	 	 1
 #define LOW		 0
