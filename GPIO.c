@@ -11,12 +11,12 @@ Port Inilsization Function
 void Init (uint32_t Port){
 	switch (Port)
 	{
-		case PortA : SetBit(RCGCGPIO,1);
-		case PortB : SetBit(RCGCGPIO,2);
-		case PortC : SetBit(RCGCGPIO,3);
-		case PortD : SetBit(RCGCGPIO,4);
-		case PortE : SetBit(RCGCGPIO,5);
-		case PortF : SetBit(RCGCGPIO,6);
+		case PortA : SetBit(RCGCGPIO,0);
+		case PortB : SetBit(RCGCGPIO,1);
+		case PortC : SetBit(RCGCGPIO,2);
+		case PortD : SetBit(RCGCGPIO,3);
+		case PortE : SetBit(RCGCGPIO,4);
+		case PortF : SetBit(RCGCGPIO,5);
 	}
 
 	Unlock(Port);
