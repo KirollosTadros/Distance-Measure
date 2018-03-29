@@ -7,7 +7,7 @@ void main(void)
 {
 
 
-    //Setting Pin Mode & iniating port
+    //Setting Pin Mode & initiating port
 
     PinMode (PF0,INPUT);
     PinMode (PF1,OUTPUT);
