@@ -1,5 +1,6 @@
 #include <stdint.h>
-#include "GPIO.c"
+#include "GPIO.h"
+#include "timer.h"
 
 #define SYSTICK     ( *((volatile uint32_t*) 0xE000E000) )
 #define STCTRL      ( *((volatile uint32_t*) 0xE000E010) )
@@ -7,14 +8,35 @@
 #define STCURRENT   ( *((volatile uint32_t*) 0xE000E018) )
 
 void systick_init() {
-    STRELOAD = 0x0;
+	STCTRL=0;
+    STRELOAD = 0x00FFFFFF;
     STCURRENT = 0x0;
-    //diable timer
-    STCTRL &= ~0x1;     //ENABLE
-    //disable interrupt
-    STCTRL &= ~0x2;     //INTEN
-    //use system clock
-    STCTRL |=  0x4;     //CLK_SRC
+ 
+    STCTRL =  0x5;     //CLK_SRC
+}
+	
+void wait(uint32_t delay)
+{
+	STRELOAD = delay-1;
+	STCURRENT= 0;
+	while(STCTRL&0x00010000==0){}
+}
+
+void wait_100us(uint32_t delay)
+{
+	uint32_t i;	
+	for(i=0;i<delay;i++)
+	{
+		wait(8000);
+		}
+}
+void wait_10ms(uint32_t delay)
+{
+	uint32_t i;	
+	for(i=0;i<delay;i++)
+	{
+		wait_100us(100);
+		}
 }
 
 void delay_ms(uint32_t count) {
@@ -22,11 +44,11 @@ void delay_ms(uint32_t count) {
         assumes 16 MHz clock,
         maximum count = 1,048 milliseconds
     */
-    STCTRL &= ~0x1;             //disable timer
+   STCTRL &= ~0x1;             //disable timer
     STCURRENT = 0x0;
-    STRELOAD = 16000 * count - 1;
+    STRELOAD = 80000 * count - 1;
     STCTRL |= 0x1;              //enable timer
-    while( STCTRL & 0x10 != 1 );
+    while( STCTRL & 0x10000 != 1 );
     return;
 }
 
@@ -39,7 +61,7 @@ void delay_us(uint32_t count) {
     STCURRENT = 0x0;
     STRELOAD = 16 * count - 1;
     STCTRL |= 0x1;              //enable timer
-    while( STCTRL & 0x10000 != 1 );
+    while( STCTRL & 0x10 != 1 );
     return;
 }
 
