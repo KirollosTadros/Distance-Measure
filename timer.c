@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "GPIO.c"
 
 #define SYSTICK     ( *((volatile uint32_t*) 0xE000E000) )
 #define STCTRL      ( *((volatile uint32_t*) 0xE000E010) )
@@ -38,7 +39,7 @@ void delay_us(uint32_t count) {
     STCURRENT = 0x0;
     STRELOAD = 16 * count - 1;
     STCTRL |= 0x1;              //enable timer
-    while( STCTRL & 0x10 != 1 );
+    while( STCTRL & 0x10000 != 1 );
     return;
 }
 
