@@ -26,7 +26,7 @@ void delay_ms(uint32_t count) {
 	STRELOAD = 16000 * count - 1;
 	STCURRENT = 0x0;
 	STCTRL |= 0x1;              //enable timer
-	while( (STCTRL & 0x10000) != 1 );
+    while( (STCTRL & 0x10000) == 0 );
 	return;
 }
 
@@ -39,7 +39,7 @@ void delay_us(uint32_t count) {
     STRELOAD = 16 * count - 1;
     STCURRENT = 0x0;
     STCTRL |= 0x1;              //enable timer
-    while( (STCTRL & 0x10000) != 1 );
+    while( (STCTRL & 0x10000) == 0 );
     return;
 }
 
