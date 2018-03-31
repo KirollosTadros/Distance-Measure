@@ -1,4 +1,4 @@
-#include "uint.h"
+#include <stdint.h>
 #include "bits.h"
 #include "registers.h"
 #include <stdbool.h>
