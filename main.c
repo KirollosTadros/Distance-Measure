@@ -31,6 +31,8 @@ void main(void)
     PinMode (PD1,OUTPUT);
     PinMode (PD2,OUTPUT);
     PinMode (PD3,OUTPUT);
+    PinMode(trigPin,OUTPUT);
+    PinMode (echoPin,INPUT);
 
     //for pullup resisitors
    // Func(PortF,PUR)=0x11;
@@ -48,23 +50,28 @@ void main(void)
         DigitalWrite(trigPin, HIGH);
         delay_us(10);
         DigitalWrite(trigPin, LOW);
-        while(!DigitalRead(echoPin)){delay_ms(60);PortWrite(PortE,1);}//test
-       // if(DigitalRead(echoPin))//test
-            PortWrite(PortE,2);//test
-        delay_ms(1000);//test
-        /*while(DigitalRead(echoPin))
+      duration=pulse_duration(echoPin);
+     delay_ms(80);
+     PortWrite(PortE,5);
+        /*
+while(HIGH)
+{
+        while(DigitalRead(echoPin))
         {
             delay_us(60);
             duration+=60000;
         }
+}
+*/
 
-        distance = (duration/2) / 29.1;
+     distance = duration/58;
+        //distance=150;
+        PortWrite(PortE,duration/100);//portE hundreds
+        PortWrite(PortD,(duration%100)/10);//portD tens
+        PortWrite(PortB,(duration%10));//portB units
+delay_ms(60);
 
-        PortWrite(PortE,distance/100);//portE hundreds
-        PortWrite(PortD,(distance%100)/10);//portD tens
-        PortWrite(PortB,(distance%10));//portB units*/
 
 
     }
-
 }

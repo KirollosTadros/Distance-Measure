@@ -79,3 +79,4 @@ uint32_t pin_time(uint32_t pin)
 	}
 	return count/10;
 }
+*/
